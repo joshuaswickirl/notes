@@ -27,6 +27,7 @@ def create_app(test_config=None):
         @functools.wraps(view)
         def wrapped_view(**kwargs):
             if not g.user:
+                flash("You must be logged in to view this page.", 'error')
                 return redirect(url_for('log_in'))
             return view(**kwargs)
         return wrapped_view
@@ -103,7 +104,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return "Index"
+        return redirect(url_for('note_index'))
 
 
     @app.route('/notes')
